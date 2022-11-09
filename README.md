@@ -2,15 +2,11 @@
 
 This project is build on top of reference project ([k6-template-typescript](https://github.com/grafana/k6-template-typescript)) provided by grafana.
 
----
-
 ## Prerequisites
 
 - Docker and docker-compose
 - [NodeJS](https://nodejs.org/en/download/)
-- [Yarn](https://yarnpkg.com/getting-started/install) (optional)
-
----
+- [Yarn](https://yarnpkg.com/getting-started/install)
 
 ## Setup
 
