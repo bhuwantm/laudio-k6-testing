@@ -5,11 +5,11 @@ const GlobEntries = require('webpack-glob-entries');
 
 module.exports = {
   mode: 'production',
-  entry: GlobEntries('./src/*test*.ts'), // Generates multiple entry for each test
+  entry: GlobEntries('./src/tests/*.test.ts'), // Generates multiple entry for each test
   output: {
     path: path.join(__dirname, 'dist'),
     libraryTarget: 'commonjs',
-    filename: '[name].js',
+    filename: 'tests/[name].js',
   },
   resolve: {
     extensions: ['.ts', '.js'],
@@ -37,6 +37,7 @@ module.exports = {
     new CopyPlugin({
       patterns: [{ 
         from: path.resolve(__dirname, 'assets'), 
+        to: path.join(__dirname, 'dist', 'assets'),
         noErrorOnMissing: true 
       }],
     }),
