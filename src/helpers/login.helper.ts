@@ -4,6 +4,10 @@ import * as config from '../config';
 
 const ENDPOINT = 'https://api-dev.laudio.com/auth/login';
 
+const tags = {
+  name: 'LOGIN'
+};
+
 type LoginResponse = {
   code: number;
   data: {
@@ -22,7 +26,8 @@ const post = (email: string, password: string) => {
   });
 
   const params = {
-    headers: config.DEFAULT_HEADERS
+    headers: config.DEFAULT_HEADERS,
+    tags
   };
 
   return http.post(ENDPOINT, body, params);
@@ -40,6 +45,7 @@ const getAccessToken = () => {
 
 const loginHelper = {
   endpoint: ENDPOINT,
+  tags: tags,
   post,
   validPost,
   invalidPost,

@@ -1,13 +1,14 @@
-import { sleep } from 'k6';
+import { check, sleep } from 'k6';
 import { Options } from 'k6/options';
+import { TeamResponse } from './../helpers/team.helper';
 
 import * as config from '../config';
-import loginHelper from '../helpers/loginHelper';
-import teamHelper from '../helpers/teamHealper';
+import loginHelper from '../helpers/login.helper';
+import teamHelper from '../helpers/team.helper';
 
 export const options: Options = {
   vus: 10,
-  iterations: 10
+  iterations: 100
 };
 
 export function setup() {
@@ -22,9 +23,18 @@ export default function (setupData: { accessToken: string }) {
     headers: {
       ...config.DEFAULT_HEADERS,
       authorization: `bearer ${setupData.accessToken}`
-    }
+    },
+    tags: teamHelper.tags
   };
 
-  teamHelper.get(params);
+  const res = teamHelper.get(params);
+  check(res, {
+    'is status 200': r => r.status === 200,
+    'has data': r => {
+      const resObj = r.json() as TeamResponse;
+      return !!resObj?.data;
+    }
+  });
+
   sleep(1);
 }

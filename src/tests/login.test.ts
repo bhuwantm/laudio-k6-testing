@@ -1,7 +1,7 @@
-import { sleep } from 'k6';
+import { check, sleep } from 'k6';
 import { Options } from 'k6/options';
 
-import loginHelper from '../helpers/loginHelper';
+import loginHelper from '../helpers/login.helper';
 
 export const options: Options = {
   vus: 10,
@@ -9,6 +9,10 @@ export const options: Options = {
 };
 
 export default function () {
-  loginHelper.validPost();
+  const res = loginHelper.validPost();
+  check(res, {
+    'is status 200': r => r.status === 200
+  });
+
   sleep(1);
 }
